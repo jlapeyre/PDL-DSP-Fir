@@ -30,9 +30,10 @@ PDL::DSP::Fir - Finite impulse response filter kernels.
 
 =head1 DESCRIPTION
 
-The module provides routines to create finite impulse
-response (FIR) filter kernels.  For a simple interface for
-filtering with this module, see L<PDL::DSP::Fir::Simple>.
+This module provides routines to create finite impulse
+response (FIR) filter kernels.  This distribution inlcudes
+a simple interface for filtering in L<PDL::DSP::Fir::Simple>.
+
 The routine L</firwin> returns a filter kernel constructed
 from windowed sinc functions. Available filters are lowpass,
 highpass, bandpass, and bandreject. The window functions are
