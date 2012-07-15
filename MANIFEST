@@ -1,0 +1,21 @@
+Changes
+ignore.txt
+lib/PDL/DSP/Fir.pm
+lib/PDL/DSP/Fir/Simple.pm
+Makefile.PL
+LICENSE
+MANIFEST			This list of files
+META.yml
+README.pod
+t/00-load.t
+t/manifest.t
+t/0-simple.t
+t/pod.t
+debian/control
+debian/changelog
+debian/copyright
+debian/rules
+debian/watch
+debian/source
+debian/source/format
+debian/compat
