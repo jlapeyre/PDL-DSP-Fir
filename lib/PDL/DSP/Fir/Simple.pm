@@ -31,10 +31,10 @@ PDL::DSP::Simple - Simple interface to windowed sinc filters.
 
 =head1 DESCRIPTION
 
-At present, this module provides one simple filtering
+At present, this module provides one filtering
 routine. The main purpose is to provide an easy-to-use
 lowpass filter that only requires the user to provide the
-data and the cutoff frequency.  However, the routines take
+data and the cutoff frequency. However, the routines take
 options to give the user more control over the
 filtering. The module implements the filters via convolution
 with a kernel representing a finite impulse response

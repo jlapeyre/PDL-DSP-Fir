@@ -32,7 +32,8 @@ WriteMakefile(
 my $POD_header = <<EOF;
 =head1 OVERVIEW
 
-A module for PDL providing some fir filtering.
+Two modules for PDL providing some fir filtering. These are
+not yet on CPAN.
 
 =cut
 
@@ -40,14 +41,17 @@ EOF
 
 if(exists $ARGV[0] && $ARGV[0] eq 'README.pod')
 {
-  open MOD, 'lib/PDL/DSP/Fir.pm' or die "Couldn't open main module";
   open README, '>README.pod'              or die "Couldn't open README.pod";
-
   print README $POD_header;
 
-  while (<MOD>)
-  {
-    if (/^=/../^=cut/)
-    { print README; }
+  foreach my $mod  ('lib/PDL/DSP/Fir.pm', 'lib/PDL/DSP/Fir/Simple.pm') {
+      open MOD, $mod or die "Couldn't open main module";
+      while (<MOD>)
+      {
+          if (/^=/../^=cut/)
+          { print README; }
+      }
+      close(MOD);
   }
+  close(README);
 }
