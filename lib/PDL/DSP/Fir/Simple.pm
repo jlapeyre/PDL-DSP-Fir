@@ -95,7 +95,7 @@ Return the kernel used in the convolution.
   ($xf, $kern)  = filter($x, { fc => 0.9 });
 
 
-Apply a lowpass filter of order 20 with a tukey window with parameter beta = 0.5
+Apply a lowpass filter of order 20 with a tukey window with parameter I<alpha> = 0.5.
 
   $xf = filter($x, {fc => 0.9 , 
     window => { name => 'tukey', params => 0.5 } , N => 20 });
