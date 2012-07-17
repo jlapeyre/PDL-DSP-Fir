@@ -10,12 +10,19 @@ PDL::DSP::Fir - Finite impulse response filter kernels.
 
 =head1 SYNOPSIS
 
-       use PDL;
-       use PDL::DSP::Fir;
+  use PDL;
+  use PDL::DSP::Fir qw( firwin );
+
+  # return a 10 sample lowpass filter kernel 
+  # with a cutoff at 90% of the Nyquist frequency.
+  $kernel = firwin( N => 10, fc => 0.9 );
+
+  # Equivalent way of calling.
+  $kernel = firwin( { N => 10, fc => 0.9 } );
 
 =head1 DESCRIPTION
 
-This module provides routines to create finite impulse
+This module provides routines to create  one-dimensional finite impulse
 response (FIR) filter kernels.  This distribution inlcudes
 a simple interface for filtering in L<PDL::DSP::Fir::Simple>.
 
@@ -27,48 +34,61 @@ in the module L<PDL::DSP::Windows>.
 Below, the word B<order> refers to the number of elements in the filter
 kernel.
 
-No functions are exported.
+No functions are exported be default.
 
 =head1 FUNCTIONS
 
 =head2 firwin
 
+
 =head3 Usage
 
+=for usage
+
  $kern = firwin({OPTIONS});
+ $kern = firwin(OPTIONS);
+
+=for ref
 
 Returns a filter kernel (a finite impulse response function)
-to be convolved with data. The kernel is built from windowed
-sinc functions. With the option C<type =E<gt> 'window'> no
-sinc is used, rather the kernel is just the window.
+to be convolved with data. 
+
+The kernel is built from windowed sinc functions. With the
+option C<type =E<gt> 'window'> no sinc is used, rather the
+kernel is just the window. The options may be passed as
+a list of key-value pairs, or as an anonymous hash.
 
 =head3 OPTIONS
 
 =over
 
-=item N   
+=item N 
 
-order of filter.
+order of filter. This is the number of elements in
+the returned kernel pdl.
 
-=item type  
+=item type
 
-Filter type. Default: lowpass. One of lowpass, highpass, bandpass, 
-bandstop, window. Aliases for bandstop are bandreject and notch.
+Filter type. One of C<lowpass>, C<highpass>, C<bandpass>, 
+C<bandstop>, C<window>. Aliases for C<bandstop> are C<bandreject> and C<notch>.
+Default is C<lowpass>. For C<bandpass> and C<bandstop> the number of samples
+L</N> must be odd.
+If B<type> is C<window>, then the kernel returned is just window function.
 
-=item fc   
+=item fc
 
-Cutoff frequency for low- and highpass. Must be a number between
-0 and 1, which expresses a fraction of the Nyquist frequency.
-No default value.
+Cutoff frequency for low- and highpass filters as a fraction of
+the Nyquist frequency. Must be a number between
+C<0> and C<1>. No default value.
 
-=item fclo, fchi  
+=item fclo, fchi
 
 Lower and upper cutoff frequencies for bandpass and bandstop filters.
 No default values.
 
 =back
 
-All other options to C<firwin> are passed to the function 
+All other options to L</firwin> are passed to the function 
 L<PDL::DSP::Windows/window>.
 
 =cut
@@ -80,27 +100,52 @@ complicated filters.
 
 =head2 ir_sinc
 
-  $sinc = ($f_cut, $N);
+=for usage
 
-Return an C<$N> point sinc function with cutoff frequency C<$f_cut>.
-C<$f_cut> must be between 0 and 1. With 1 being Nyquist freq.
+  $sinc = ir_sinc($f_cut, $N);
+
+=for ref
+
+Return an C<$N> point sinc function representing a lowpass filter
+with cutoff frequency C<$f_cut>.
+
+C<$f_cut> must be between 0 and 1, with 1 being Nyquist freq.
+The output pdl is the function C<sin( $f_cut * $x ) / $x> where
+$x is pdl of C<$N> uniformly spaced values ranging from
+C< - PI * ($N-1)/2> through C<PI * ($N-1)/2>. For what it's
+worth, a bit of efficiency is gained by computing the index
+at which C<$x> is zero, rather than searching for it.
 
 =cut
-=head2 spectral_invert
+=head2 spectral_inverse
 
-  $fir_inv = spectral_invert($fir);
+=for usage
 
-Return a fir function whose spectrum is the additive inverse
-wrt 1 of the spectrum of fir function C<$fir>.
+  $fir_inv = spectral_inverse($fir);
+
+=for ref
+
+Return output kernel whose spectrum is the inverse of the spectrum
+of the input kernel.
+
+The number of samples in the input kernel must be odd.
+Input C<$fir> and output C<$fir_inv> are real-space fir filter kernels.
+The spectrum of the output kernel is the additive inverse
+with respect to 1 of the spectrum of the input kernel.
 
 =cut
 =head2 spectral_reverse
 
+=for usage
+
   $fir_rev = spectral_reverse($fir);
 
-Return a fir function whose spectrum is the reverse
-of the spectrum fir function C<$fir>. That is, the
-spectrum is mirrored about the center frequency.
+=for ref
+
+Return output kernel whose spectrum is the reverse of the spectrum
+of the input kernel.
+
+That is, the spectrum is mirrored about the center frequency.
  
 =cut
 =head1 AUTHOR
