@@ -94,6 +94,12 @@ Return the kernel used in the convolution.
 
   ($xf, $kern)  = filter($x, { fc => 0.9 });
 
+
+Apply a lowpass filter of order 20 with a tukey window with parameter beta = 0.5
+
+  $xf = filter($x, {fc => 0.9 , 
+    window => { name => 'tukey', params => 0.5 } , N => 20 });
+
 =head3 OPTIONS
 
 =over
@@ -116,6 +122,9 @@ Boundary condition passed to C<convolveND>. See L<PDL::ImageND>.
 
 All other options to C<filter> are passed to the function L<PDL::DSP::Fir/firwin> which creates the filter kernel.
 L<PDL::DSP::Fir/firwin> in turn passes options to L<PDL::DSP::Windows:window>.
+The option C<window> is either a string giving the name of the window function, or
+an anonymous hash of options to pass to  L<PDL::DSP::Windows:window>.
+For example C<< { name => 'window_name', ... } >>.
 
 If the second argument is not a hash of options then it is interpreted as a
 kernel C<$kern> to be convolved with the C<$data>.

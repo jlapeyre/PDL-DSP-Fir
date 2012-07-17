@@ -22,7 +22,7 @@ sub tapprox {
 my $L = 1001;
 my $x = testdata($L, [.01, .1, .4], [1, ,.1, .05]);
 
- # 1
+# 1
 ok( tapprox( $x->sum, 0 ) );
 
 my $fc = .05;
@@ -35,6 +35,6 @@ ok( tapprox(max($x - $xlo - $xhi),0), 'sum of lowpass and highpass is original s
 #my $fclo = .07;
 #my $fchi = .15;
 #my $xbp = filter($x, { fclo => $fclo, fchi => $fchi , type => 'bandpass' , win => 'blackman' , L => $L,
-#              boundary => 'truncated'  } );
+#              boundary => 'truncated'  } );o
 
 done_testing();
