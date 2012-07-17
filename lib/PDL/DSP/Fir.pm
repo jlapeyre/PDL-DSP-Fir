@@ -88,7 +88,7 @@ Filter type. One of C<lowpass>, C<highpass>, C<bandpass>,
 C<bandstop>, C<window>. Aliases for C<bandstop> are C<bandreject> and C<notch>.
 Default is C<lowpass>. For C<bandpass> and C<bandstop> the number of samples
 L</N> must be odd.
-If B<type> is C<window>, then the kernel returned is just window function.
+If B<type> is C<window>, then the kernel returned is just the window function.
 
 =item fc
 
