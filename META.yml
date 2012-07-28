@@ -22,4 +22,4 @@ requires:
   PDL: 0
   PDL::DSP::Windows: 0
   Test::More: 0
-version: 0.001
+version: 0.003
