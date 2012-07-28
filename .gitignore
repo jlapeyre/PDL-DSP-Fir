@@ -13,3 +13,5 @@ pm_to_blib*
 cover_db
 pod2htm*.tmp
 PDL-DSP-Windows-*
+MYMETA.yml
+ts.pl
