@@ -10,4 +10,5 @@ README.pod
 t/00-load.t
 t/manifest.t
 t/0-simple.t
+t/1-fir.t
 t/pod.t
