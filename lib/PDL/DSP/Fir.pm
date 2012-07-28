@@ -4,7 +4,7 @@ use 5.008;
 use strict;
 use warnings;
 
-our $VERSION = '0.003';
+our $VERSION = '0.004';
 
 use base 'Exporter';
 
@@ -131,8 +131,8 @@ sub firwin {
         });
     my $opts = $opt->options($iopts);
     my $winopts = { N => $opts->{N} };
-    if (defined $opts->{win} ) {
-        my $w = $opts->{win};
+    if (defined $opts->{window} ) {
+        my $w = $opts->{window};
         if ( ref $w ) {
             foreach my $wkey (keys %{$w}) {
                 $winopts->{$wkey} = $w->{$wkey};
@@ -157,7 +157,7 @@ sub firwin {
         $kernel = spectral_inverse($kernel);
     }
     elsif ($type eq 'window') {
-        $kernel =  $win/$win->sum;
+        $kernel = $win/$win->sum;
     }
     elsif ($type eq 'bandpass') {
         my $ir1 = ir_sinc($opts->{fclo},$opts->{N});
