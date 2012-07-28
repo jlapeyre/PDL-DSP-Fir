@@ -42,6 +42,6 @@ ok( tapprox(max($x - $xbp - $xbs),0), 'sum of bandpass and bandreject is origina
 #my $fclo = .07;
 #my $fchi = .15;
 #my $xbp = filter($x, { fclo => $fclo, fchi => $fchi , type => 'bandpass' , win => 'blackman' , L => $L,
-#              boundary => 'truncated'  } );o
+#              boundary => 'truncated'  } );
 
 done_testing();
