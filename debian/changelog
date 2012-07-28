@@ -1,3 +1,9 @@
+libpdl-dsp-fir-perl (0.003-1) unstable; urgency=low
+
+  * Upstream release
+
+ -- John Lapeyre <jlapeyre@cpan.org>  Sun, 29 Jul 2012 01:12:34 +0200
+
 libpdl-dsp-fir-perl (0.001-1) unstable; urgency=low
 
   * Initial Release.
