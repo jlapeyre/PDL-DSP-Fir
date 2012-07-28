@@ -116,7 +116,8 @@ from other parameters.
 
 =item boundary   
 
-Boundary condition passed to C<convolveND>. See L<PDL::ImageND>.
+Boundary condition passed to C<convolveND>. Must be one of
+'extend', 'truncate', 'periodic'. See L<PDL::ImageND>.
 
 =back
 
