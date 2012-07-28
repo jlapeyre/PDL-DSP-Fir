@@ -144,27 +144,45 @@ sub firwin {
     }
     my $type = $opts->{type};
     my $win = PDL::DSP::Windows::window($winopts);
-    my ($ir);
-    $ir = ir_sinc($opts->{fc},$opts->{N}), return $ir * $win 
-        if ($type eq 'lowpass');
-    $ir = ir_sinc($opts->{fc},$opts->{N}), return spectral_inverse($ir * $win)
-        if ($type eq 'highpass');        
-    return $win/$win->sum if ($type eq 'window');
-    if ($type eq 'bandpass') {
+    my ($ir,$kernel);
+    if ($type eq 'lowpass') {
+        $ir = ir_sinc($opts->{fc},$opts->{N});
+        $kernel = $ir * $win;
+        $kernel /= $kernel->sum;
+    }
+    elsif ($type eq 'highpass') {
+        $ir = ir_sinc($opts->{fc},$opts->{N});
+        $kernel = $ir * $win;
+        $kernel /= $kernel->sum;
+        $kernel = spectral_inverse($kernel);
+    }
+    elsif ($type eq 'window') {
+        $kernel =  $win/$win->sum;
+    }
+    elsif ($type eq 'bandpass') {
         my $ir1 = ir_sinc($opts->{fclo},$opts->{N});
         my $ir2 = ir_sinc($opts->{fchi},$opts->{N});
         my $fir1 = $ir1 * $win;
-        my $fir2 = spectral_inverse($ir2 * $win);
-        return spectral_inverse($fir1 + $fir2);
+        $fir1 /= $fir1->sum;
+        my $fir2 = $ir2 * $win;
+        $fir2 /= $fir2->sum;
+        $fir2 = spectral_inverse($fir2);
+        $kernel = spectral_inverse($fir1 + $fir2);
     }
-    if ($type eq 'bandstop' or $type eq 'bandreject' or $type eq 'notch') {
+    elsif ($type eq 'bandstop' or $type eq 'bandreject' or $type eq 'notch') {
         my $ir1 = ir_sinc($opts->{fclo},$opts->{N});
         my $ir2 = ir_sinc($opts->{fchi},$opts->{N});
         my $fir1 = $ir1 * $win;
-        my $fir2 = spectral_inverse($ir2 * $win);
-        return $fir1 + $fir2;
+        $fir1 /= $fir1->sum;
+        my $fir2 = $ir2 * $win;
+        $fir2 /= $fir2->sum;
+        $fir2 = spectral_inverse($fir2);
+        $kernel = $fir1 + $fir2;
     }
-    barf "PDL::DSP::FIR::firwin: Unknown impulse response '$type'\n";
+    else {
+        barf "PDL::DSP::FIR::firwin: Unknown impulse response '$type'\n";
+    }
+    return $kernel;
 }
 
 =pod

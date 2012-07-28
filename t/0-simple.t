@@ -3,7 +3,7 @@ use warnings;
 use Test::More;
 
 BEGIN {
-    plan tests => 2;
+    plan tests => 3;
 }
 
 use PDL::LiteF;
@@ -27,10 +27,17 @@ ok( tapprox( $x->sum, 0 ) );
 
 my $fc = .05;
 
+my $fclo = .05;
+my $fchi = .15;
+
 my $xlo = filter($x, { fc => $fc } );
 my $xhi = filter($x, { fc => $fc , type => 'highpass' } );
-
 ok( tapprox(max($x - $xlo - $xhi),0), 'sum of lowpass and highpass is original signal');
+
+my $xbp = filter($x, { fclo => $fclo, fchi => $fchi, type => 'bandpass' } );
+my $xbs = filter($x, { fclo => $fclo , fchi => $fchi,  type => 'bandstop' } );
+
+ok( tapprox(max($x - $xbp - $xbs),0), 'sum of bandpass and bandreject is original signal');
 
 #my $fclo = .07;
 #my $fchi = .15;
