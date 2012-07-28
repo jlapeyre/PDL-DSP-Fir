@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:               PDL-DSP-Fir
-version:            0.003
+version:            0.004
 abstract:           Finite impulse response filter kernels.
 author:
     - John Lapeyre <jlapeyre@cpan.org>
