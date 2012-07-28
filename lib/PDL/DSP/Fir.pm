@@ -124,7 +124,7 @@ sub firwin {
         {
             N => undef,
             type => 'lowpass',
-            win => undef,
+            window => undef,
             fc => undef,
             fclo => undef,
             fchi => undef,
