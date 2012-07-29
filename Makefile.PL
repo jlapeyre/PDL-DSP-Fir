@@ -32,8 +32,8 @@ WriteMakefile(
 my $POD_header = <<EOF;
 =head1 OVERVIEW
 
-Two modules for PDL providing some fir filtering. These are
-not yet on CPAN.
+Two modules for PDL providing some fir filtering. These modules
+are on CPAN
 
 =cut
 
