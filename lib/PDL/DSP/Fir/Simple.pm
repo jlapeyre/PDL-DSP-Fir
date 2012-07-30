@@ -59,11 +59,11 @@ No functions are exported by default.
 
 =head2 filter
 
-  $dataf = filter($data, {OPTIONS});
+  $xf = filter($x, {OPTIONS});
 
        or
 
-  $dataf = filter($data, $kern);
+  $xf = filter($x, $kern);
 
 =head3 Examples
 
@@ -80,10 +80,9 @@ Apply a highpass filter rather than the default lowpass filter
   $xf = filter($x, {fc => 0.9 , type => 'highpass' });
 
 
-Apply a lowpass filter of order 20 with a blackman window rather than the default hamming window.
+Apply a lowpass filter of order 20 with a blackman window, rather than the default hamming window.
 
   $xf = filter($x, {fc => 0.9 , window => 'blackman' , N => 20 });
-
 
 Apply a 10 point moving average. Note that this moving averaging is implemented via
 convolution. This is a relatively inefficient implementation.
@@ -107,7 +106,9 @@ Apply a lowpass filter of order 20 with a tukey window with parameter I<alpha> =
 =item N    
 
 Order of filter. I.e. the number of points in the filter kernel.
-Default: number of points in $data.
+If this option is not given, or is undefined, or false, or less than
+zero, then the order of the filter is equal to the number of points
+in the data C<$x>.
  
 =item  kern  
 
@@ -140,7 +141,7 @@ sub filter {
     my ($kern, $boundary);
     if (ref $iopts eq 'HASH') {
         $boundary = delete $iopts->{boundary} || 'periodic';
-        $iopts->{N} = ($iopts->{N} and $iopts->{N} > 0) || $dat->nelem;
+        $iopts->{N} = ($iopts->{N} and $iopts->{N} > 0) ? $iopts->{N} : $dat->nelem;
         $kern = $iopts->{kern} || PDL::DSP::Fir::firwin($iopts);
     }
     else {

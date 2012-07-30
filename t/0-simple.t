@@ -1,9 +1,11 @@
+# -*-Perl-*-
+
 use strict;
 use warnings;
 use Test::More;
 
 BEGIN {
-    plan tests => 3;
+    plan tests => 6;
 }
 
 use PDL::LiteF;
@@ -38,6 +40,18 @@ my $xbp = filter($x, { fclo => $fclo, fchi => $fchi, type => 'bandpass' } );
 my $xbs = filter($x, { fclo => $fclo , fchi => $fchi,  type => 'bandstop' } );
 
 ok( tapprox(max($x - $xbp - $xbs),0), 'sum of bandpass and bandreject is original signal');
+
+# Check interface for determining number of samples in kernel
+my ($dat,$kern);
+($dat,$kern) = filter($x, { fc => $fc } );
+ok($kern->nelem == $x->nelem);
+
+($dat,$kern) = filter($x, { fc => $fc , N => -1 } );
+ok($kern->nelem == $x->nelem);
+
+($dat,$kern) = filter($x, { fc => $fc , N => 100 } );
+ok($kern->nelem == 100);
+
 
 #my $fclo = .07;
 #my $fchi = .15;
