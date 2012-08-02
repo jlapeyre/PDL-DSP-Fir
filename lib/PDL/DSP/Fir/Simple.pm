@@ -11,8 +11,11 @@ use base 'Exporter';
 use PDL::LiteF;
 use PDL::ImageND('convolveND');
 use PDL::NiceSlice;
-#use PDL::Options;
-use PDL::Constants qw(PI);
+
+# first line is compat. with older pdl.
+use constant PI    => 4 * atan2(1, 1);
+#use PDL::Constants qw(PI);
+
 use PDL::DSP::Fir;
 
 our @ISA = qw(Exporter);

@@ -11,7 +11,8 @@ use base 'Exporter';
 use PDL::LiteF;
 use PDL::NiceSlice;
 use PDL::Options;
-use PDL::Constants qw(PI);
+use constant PI    => 4 * atan2(1, 1);
+#use PDL::Constants qw(PI);
 use PDL::DSP::Windows;
 
 our @ISA = qw(Exporter);
