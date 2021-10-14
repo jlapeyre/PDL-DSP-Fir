@@ -1,3 +1,6 @@
+0.006 2021-10-14
+- build fixes
+
 0.005 2012-08-02
 - use own constant for PI for compatibility with older PDL
 
