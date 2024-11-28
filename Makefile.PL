@@ -37,7 +37,7 @@ WriteMakefile(
 my $POD_header = <<EOF;
 =head1 OVERVIEW
 
-Two modules for PDL providing some fir filtering.
+Two modules for PDL providing some finite impulse response (FIR) filtering.
 
 =cut
 
