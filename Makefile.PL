@@ -10,10 +10,12 @@ WriteMakefile(
     ABSTRACT_FROM       => 'lib/PDL/DSP/Fir.pm',
     LICENSE => 'perl',
     PL_FILES            => {},
+    TEST_REQUIRES => {
+        'Test::More' => '0.88', # done_testing
+    },
     PREREQ_PM => {
-        'Test::More' => 0,
         'PDL' => 0,
-        'PDL::DSP::Windows' => 0
+        'PDL::DSP::Windows' => 0,
     },
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean               => { FILES => 'PDL-DSP-* ' },
