@@ -33,17 +33,17 @@ WriteMakefile(
     },
 );
 
-
 # reroute the main POD into a separate README.pod if requested. This is here
 # purely to generate a README.pod for the github front page
 my $POD_header = <<EOF;
-=head1 OVERVIEW
+  =head1 OVERVIEW
 
-Two modules for PDL providing some finite impulse response (FIR) filtering.
+  Two modules for PDL providing some finite impulse response (FIR) filtering.
 
-=cut
+  =cut
 
 EOF
+$POD_header =~ s/^  //gm;
 
 if(exists $ARGV[0] && $ARGV[0] eq 'README.pod')
 {
