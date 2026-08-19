@@ -47,17 +47,15 @@ $POD_header =~ s/^  //gm;
 
 if(exists $ARGV[0] && $ARGV[0] eq 'README.pod')
 {
-  open README, '>README.pod'              or die "Couldn't open README.pod";
-  print README $POD_header;
+  open my $fh, '>', 'README.pod' or die "Couldn't open README.pod";
+  print $fh $POD_header;
 
-  foreach my $mod  ('lib/PDL/DSP/Fir.pm', 'lib/PDL/DSP/Fir/Simple.pm') {
-      open MOD, $mod or die "Couldn't open main module";
-      while (<MOD>)
+  foreach my $mod (qw(lib/PDL/DSP/Fir.pm lib/PDL/DSP/Fir/Simple.pm)) {
+      open my $mod_fh, $mod or die "Couldn't open main module";
+      while (<$mod_fh>)
       {
           if (/^=/../^=cut/)
-          { print README; }
+          { print $fh $_; }
       }
-      close(MOD);
   }
-  close(README);
 }
