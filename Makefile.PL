@@ -2,6 +2,7 @@ use 5.006;
 use strict;
 use warnings;
 use ExtUtils::MakeMaker;
+use PDL::Core::Dev;
 
 WriteMakefile(
     NAME                => 'PDL::DSP::Fir',
@@ -9,7 +10,9 @@ WriteMakefile(
     VERSION_FROM        => 'lib/PDL/DSP/Fir.pm',
     ABSTRACT_FROM       => 'lib/PDL/DSP/Fir.pm',
     LICENSE => 'perl',
-    PL_FILES            => {},
+    CONFIGURE_REQUIRES => {
+        'PDL' => '2.105', # pdldoc_add
+    },
     TEST_REQUIRES => {
         'Test::More' => '0.88', # done_testing
     },
@@ -32,6 +35,8 @@ WriteMakefile(
       },
     },
 );
+
+sub MY::postamble { pdldoc_add() }
 
 # reroute the main POD into a separate README.pod if requested. This is here
 # purely to generate a README.pod for the github front page
